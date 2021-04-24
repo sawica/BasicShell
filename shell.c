@@ -44,24 +44,36 @@ void showUserName_and_Dir(char* user){
     write(STDOUT_FILENO, user, strlen(user));
     write(STDOUT_FILENO, space, strlen(space));
     write(STDOUT_FILENO, dir, strlen(dir));
+    write(STDOUT_FILENO, " ", 1);
 
 
 }
 
-char* readLine(){
+char** readLine(){
 
-    size_t line_size = 1000;
-    char* line = malloc(line_size * sizeof(char));
-    size_t temp = getline(&line, &line_size, stdin);
+    size_t line_size = 2;
+    char** line = (char *) malloc(line_size * sizeof(char*));
+    line[0]=malloc(1000*sizeof(char));
+    
+    size_t temp = getline(&line[0], &line_size, stdin);
     // zrbic obsluge bledu 
-    write(STDOUT_FILENO,line, strlen(line));
+    char* temp_line = line[0];
+    write(STDOUT_FILENO,temp_line, strlen(temp_line));
 
     return line;
 }
 
+void write_token (char **token){
+     char buf[2] = { 0, 0 };
+    while (buf[0] != NULL ){
+        read(token, buf, 1);
+        write(STDOUT_FILENO, buf, 1);
+    }
+}
+
 
 char** tokenize(char** old_tokens, char delimeter) {
-    char** token=malloc(50*sizeof(char));
+    char** token=(char*)malloc(50*sizeof(char*));
     for(int i=0; i<50;i++){
         token[i]=malloc(20*sizeof(char));
     }
@@ -69,7 +81,7 @@ char** tokenize(char** old_tokens, char delimeter) {
     int tmp=0;
     for(int j=0; j<50; j++){    
         if(buf == NULL) j++;
-        read(old_tokens, buf, 1);
+        read(old_tokens[j], buf, 1);
         if (buf[0] != delimeter) {
       	strcat(token[tmp], buf);
         }
@@ -101,7 +113,7 @@ int parse_commands(char* line, char** commands){
 void handle_commands(char* user//, char** first_command, char** second_command
 ){
     //tu deklaracje
-    char* line;
+    char** line;
     char* commands[4];
     int one_or_two = 0;
     int sum=0;
@@ -109,6 +121,12 @@ void handle_commands(char* user//, char** first_command, char** second_command
     while(1){
         showUserName_and_Dir(user);
         line = readLine();
+        char** tok = (char**)malloc(50*sizeof(char*));
+        for(int i=0; i<50;i++){
+            tok[i]=(char*)malloc(20*sizeof(char));
+        }
+        tok =tokenize(line, ' ');
+        write_token(tok);
 /*
         one_or_two = parse_commands(line, commands); //return 0 lub 2
         while(counter!=0){
