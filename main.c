@@ -11,7 +11,7 @@
 #include <errno.h>
 
 #include "arguments.h"
-#include "builtinsfunc.h.h"
+#include "builtinsfunc.h"
 #include "execute.h"
 #include "history.h"
 
@@ -35,6 +35,7 @@ int main(){
     for(int i=0; i<50;i++){
         tok[i]=(char*)malloc(20*sizeof(char));
     }
-    tok =tokenize(line, ' ');
-    write_token(tok);
+    tokenize(line, ' ');
+    fprintf(stdout,"ZYJE");
+   // write_token(line);
 }

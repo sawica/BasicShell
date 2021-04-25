@@ -11,6 +11,7 @@
 #include <errno.h>
 
 #include "builtinsfunc.h"
+#include "arguments.h"
 
 int parse_commands(char* line, char** commands){
     int count_of_commands=5;
@@ -64,10 +65,15 @@ void handle_commands(char* user//, char** first_command, char** second_command
 
 }
 
+/*
 void function(char** token){
     int i=0;
-    char buf[2] = { 0, 0 };
+    char buf;
     char* tmp = (char*)malloc(5*sizeof(char));
+
+    
+
+
     while(buf != NULL){
         if(buf !=' '){
             read(token[i], buf, 1);
@@ -79,7 +85,7 @@ void function(char** token){
 
 
 }
-
+*/
 
 void function_switch(char** token){
     // switch(tmp){
@@ -124,4 +130,6 @@ void function_switch(char** token){
 void printHelp(){
     char* help = "These are the commands you can use in this shell:\nhelp\nexit\n";
     write(STDOUT_FILENO, help, strlen(help));
+}
+*/
 }

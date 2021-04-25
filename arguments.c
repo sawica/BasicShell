@@ -12,31 +12,29 @@
 
 #include "arguments.h"
 
-char* mread(char* ustring) {
-    char buf[2] = { 0, 0 };
+#define clear() printf("\033[H\033[J")
+
+void mread(char* ustring) {
+    char buf[2] = {0,0};
     while (buf[0] != '\n') {
-        read(STDIN_FILENO, buf, 1);
+        read(STDIN_FILENO, &buf, 1);
 
         if (buf[0] != '\n') {
             strcat(ustring, buf);
         }
     }
-    return ustring;
 }
 void introduction(char* user) {
-
-    clear();
-    char* hello="Hello ";
+    char* hello="\nHello ";
     char* hello2 = " ! Welcome to our BasicShell\n\n";
 
     write(STDOUT_FILENO, hello, strlen(hello));
     write(STDOUT_FILENO, user, strlen(user));
     write(STDOUT_FILENO, hello2, strlen(hello2));
 
-    char* help = "*If you need more informations about how to use this shell just write 'help' in command line. \n";
+    char* help = "*If you need more informations about how to use this shell just write 'help' in command line. \n\n\n";
     write(STDOUT_FILENO, help, strlen(help));
     // sleep(3);
-    clear();
 }
 
 void showUserName_and_Dir(char* user){
@@ -48,6 +46,8 @@ void showUserName_and_Dir(char* user){
     write(STDOUT_FILENO, space, strlen(space));
     write(STDOUT_FILENO, dir, strlen(dir));
     write(STDOUT_FILENO, " ", 1);
+
+    free(dir);
 
 
 }
@@ -67,36 +67,57 @@ char** readLine(){
 }
 
 void write_token (char **token){
-    char buf[2] = { 0, 0 };
+    /*char buf[2] = { 0, 0 };
     int i=0;
 
     while (buf != NULL ){
-        read(token[i], buf, 1);
+        read(token[i], &buf, 1);
         write(STDOUT_FILENO, buf, 1);
         if(buf == '\n') i++;
+    }*/
+    int i, j;
+
+    for(i = 0; i < 50; i++){
+
+        if(token[i]=NULL) break;
+
+        write(STDOUT_FILENO, token[i], strlen(token[i]));
+        write(STDOUT_FILENO,"\n", 1);
+
     }
 }
 
 
 char** tokenize(char** old_tokens, char delimeter) {
     char** token=(char**)malloc(50*sizeof(char*));
-    for(int i=0; i<50;i++){
+    int i,j;
+    for(i=0; i<50;i++){
         token[i]=(char*)malloc(20*sizeof(char));
     }
-    char buf[2] = { 0, 0 };
+    char *buf;
     int tmp=0;
-    for(int j=0; j<50; j++){
-        if(buf == NULL) j++;
-        read(old_tokens[j], buf, 1);
-        if (buf[0] != delimeter) {
-            strcat(token[tmp], buf);
+    for(j=0; j<50; j++){
+        if(old_tokens[j]==NULL) break;
+        buf = old_tokens[j];
+        
+        for(i = 0; i < strlen(buf); i++){
+            fprintf(stdout,"%c ", buf[i]);
+            if (buf[i] != delimeter) {
+                token[tmp][strlen(token[tmp])] = buf[i];
+                fprintf(stdout,"\n%s ", token[tmp]);
+            }
+            else {
+                token[++tmp][strlen(token[tmp])] = buf[i];
+                tmp++;
+                fprintf(stdout,"\n%s ", token[tmp]);
+            }
         }
-        else {
-            strcat(token[tmp++], buf);
-            tmp++;
-        }
-    }
-    return token;
+        
+        fprintf(stdout,"%d ", tmp);
+
+    }fprintf(stdout,"ELUWINA\n");
+   // return token;
+   old_tokens = token;
     // delimeter = ' ', old_tokens = ["ls -1 | grep .c|xargs wc -l|sort >>file.txt"]
     // return ["ls", " ", "-1", " ", "|", " ", "grep", " ", ".c|xargs", " ", "wc",  " ","-l|sort", " ", ">>file.txt"]
     //
