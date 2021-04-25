@@ -156,6 +156,29 @@ void handle_commands(char* user//, char** first_command, char** second_command
     
 }
 
+void function(char** token){
+    int i=0;
+    char buf[2] = { 0, 0 };
+    char* tmp = (char*)malloc(5*sizeof(char));
+        while(buf != NULL){
+            if(buf !='\n'){
+                read(token[i], buf, 1);
+                strcat(tmp, buf);
+            }
+            else i++;
+            function_switch(tmp);
+        }
+             
+        
+}
+
+void function_switch(char* tmp){
+   // switch(tmp){
+
+  //  }
+
+}
+
 int main(){
     char* user = malloc(16 * sizeof(char));
 
@@ -165,10 +188,11 @@ int main(){
     //handle_commands(user);
     showUserName_and_Dir(user);
     char** line = readLine();
-   // char** tok = (char**)malloc(50*sizeof(char*));
-   // for(int i=0; i<50;i++){
-   // tok[i]=(char*)malloc(20*sizeof(char));
-   // }
-   // tok =tokenize(line, ' ');
-   // write_token(tok);
+    showUserName_and_Dir(user);
+    char** tok = (char**)malloc(50*sizeof(char*));
+    for(int i=0; i<50;i++){
+        tok[i]=(char*)malloc(20*sizeof(char));
+    }
+    tok =tokenize(line, ' ');
+    write_token(tok);
 }
