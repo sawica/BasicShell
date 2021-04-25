@@ -1,6 +1,14 @@
 //
 // Created by Magdalena Sawicka on 25.04.2021.
 //
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <string.h>
+#include <signal.h>
+#include <errno.h>
 
 #include "arguments.h"
 
