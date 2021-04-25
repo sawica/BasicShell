@@ -14,15 +14,16 @@
 
 #define clear() printf("\033[H\033[J")
 
-void mread(char* ustring) {
+void mread(char* mstring) {
     char buf[2] = {0,0};
     while (buf[0] != '\n') {
         read(STDIN_FILENO, &buf, 1);
 
         if (buf[0] != '\n') {
-            strcat(ustring, buf);
+            strcat(mstring, buf);
         }
     }
+    //return mstring;
 }
 void introduction(char* user) {
     char* hello="\nHello ";
@@ -66,28 +67,6 @@ char** readLine(){
     return line;
 }
 
-void write_token (char **token){
-    /*char buf[2] = { 0, 0 };
-    int i=0;
-
-    while (buf != NULL ){
-        read(token[i], &buf, 1);
-        write(STDOUT_FILENO, buf, 1);
-        if(buf == '\n') i++;
-    }*/
-    int i, j;
-
-    for(i = 0; i < 50; i++){
-
-        if(token[i]=NULL) break;
-
-        write(STDOUT_FILENO, token[i], strlen(token[i]));
-        write(STDOUT_FILENO,"\n", 1);
-
-    }
-}
-
-
 char** tokenize(char** old_tokens, char delimeter) {
     char** token=(char**)malloc(50*sizeof(char*));
     int i,j;
@@ -101,22 +80,15 @@ char** tokenize(char** old_tokens, char delimeter) {
         buf = old_tokens[j];
         
         for(i = 0; i < strlen(buf); i++){
-            fprintf(stdout,"%c ", buf[i]);
             if (buf[i] != delimeter) {
                 token[tmp][strlen(token[tmp])] = buf[i];
-                fprintf(stdout,"\n%s ", token[tmp]);
             }
-            else {
+           else {
                 token[++tmp][strlen(token[tmp])] = buf[i];
                 tmp++;
-                fprintf(stdout,"\n%s ", token[tmp]);
             }
         }
-        
-        fprintf(stdout,"%d ", tmp);
-
-    }fprintf(stdout,"ELUWINA\n");
-   // return token;
+    }
    old_tokens = token;
     // delimeter = ' ', old_tokens = ["ls -1 | grep .c|xargs wc -l|sort >>file.txt"]
     // return ["ls", " ", "-1", " ", "|", " ", "grep", " ", ".c|xargs", " ", "wc",  " ","-l|sort", " ", ">>file.txt"]

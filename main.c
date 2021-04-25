@@ -23,8 +23,9 @@ int main(){
     write(STDOUT_FILENO, "Your user name: ", 15);
     mread(user);
     introduction(user);
-    //handle_commands(user);
-    showUserName_and_Dir(user);
+    handle_commands(user);
+
+   /* showUserName_and_Dir(user);
     char** line = (char**)malloc(50*sizeof(char*));
     for(int i=0; i<50;i++){
         line[i]=(char*)malloc(20*sizeof(char));
@@ -38,4 +39,5 @@ int main(){
     tokenize(line, ' ');
     fprintf(stdout,"ZYJE");
    // write_token(line);
+    */
 }

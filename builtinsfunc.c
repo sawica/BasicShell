@@ -33,12 +33,12 @@ void handle_commands(char* user//, char** first_command, char** second_command
     while(1){
         showUserName_and_Dir(user);
         line = readLine();
-        char** tok = (char**)malloc(50*sizeof(char*));
-        for(int i=0; i<50;i++){
-            tok[i]=(char*)malloc(20*sizeof(char));
-        }
-        tok =tokenize(line, ' ');
-        write_token(tok);
+        tokenize(line, ' ');
+        tokenize(line, '|');
+        tokenize(line, '$');
+        tokenize(line, '>');
+        tokenize(line, '#');
+        function_switch(line);
 /*
         one_or_two = parse_commands(line, commands); //return 0 lub 2
         while(counter!=0){
@@ -86,50 +86,51 @@ void function(char** token){
 
 }
 */
-
-void function_switch(char** token){
-    // switch(tmp){
-    int i, command;
-    /* char* all_commands[5];
-     all_commands[0]='help';
-     all_commands[1]='exit';
-     all_commands[2]='cd';
-     all_commands[3]='mkdir';
-     all_commands[4]='ls';
-
-     for(i=0;i<5;i++){
-         if (strcmp(tocken[0], all_commands[i]) == 0) {
-             command = i;
-             break;
-         }
-     }/
-
-     switch(token[0]){
-         case help:
-             printHelp();
-         case exit:
-             char tmp = "Are you sure?\n [yes/no]\n";
-             char* answer = malloc(5 * sizeof(char));
-             write(STDOUT_FILENO, tmp, strlen(tmp));
-             if(mread(answer)=='yes'){
-                 exit(0);
-             }
-             if(mread(answer)=='no'){
-                 break;
-             }
-             if(mread(answer)!='yes' && mread(answer)=='no'){
-                 char* tmp2 = "Choose between 'yes' or 'no'\n";
-                 write(STDOUT_FILENO, tmp2, strlen(tmp2));
-             }
-
-
-     }
-
-
-}
 void printHelp(){
     char* help = "These are the commands you can use in this shell:\nhelp\nexit\n";
     write(STDOUT_FILENO, help, strlen(help));
 }
-*/
+void function_switch(char** token){
+    // switch(tmp){
+    int i, command;
+     char* all_commands[5];
+     all_commands[0]="help";
+     all_commands[1]="exit";
+     all_commands[2]="cd";
+     all_commands[3]="mkdir";
+     all_commands[4]="ls";
+
+     char * tok = (char*)malloc(sizeof(char)*(strlen(token[0])-1));
+     tok = token[0];
+     for(i=0;i<5;i++){
+
+         if (strcmp(tok, all_commands[i]) == 0) {
+             fprintf(stdout, "huhu: %s ", token[0]);
+             command = i;
+             break;
+         }
+     }
+    char* tmp = "Are you sure?\n [yes/no]\n";
+    char* answer = (char*)malloc(5 * sizeof(char));
+
+     switch(command){
+         case 0:
+             printHelp();
+         case 1:
+             write(STDOUT_FILENO, tmp, strlen(tmp));
+             //answer = mread();
+             mread(answer);
+             if(strcmp(answer,"yes")==0){
+                 exit(0);
+             }
+             mread(answer);
+             if(strcmp(answer,"no")==0){
+                 break;
+             }
+             mread(answer);
+             if(strcmp(answer,"yes")!=0 && strcmp(answer,"no")!=0){
+                 char* tmp2 = "Choose between 'yes' or 'no'\n";
+                 write(STDOUT_FILENO, tmp2, strlen(tmp2));
+             }
+     }
 }

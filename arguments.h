@@ -5,7 +5,7 @@
 #ifndef BASICSHELL_ARGUMENTS_H
 #define BASICSHELL_ARGUMENTS_H
 
-void mread(char* ustring);
+void mread(char* mstring);
 void introduction(char* user);
 void showUserName_and_Dir(char* user);
 char** readLine();
