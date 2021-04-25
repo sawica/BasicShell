@@ -52,8 +52,8 @@ void showUserName_and_Dir(char* user){
 char** readLine(){
 
     size_t line_size = 2;
-    char** line = (char *) malloc(line_size * sizeof(char*));
-    line[0]=malloc(1000*sizeof(char));
+    char** line = (char**)malloc(line_size * sizeof(char*));
+    line[0]=(char*)malloc(1000*sizeof(char));
     
     size_t temp = getline(&line[0], &line_size, stdin);
     // zrbic obsluge bledu 
@@ -64,18 +64,21 @@ char** readLine(){
 }
 
 void write_token (char **token){
-     char buf[2] = { 0, 0 };
-    while (buf[0] != NULL ){
-        read(token, buf, 1);
+    char buf[2] = { 0, 0 };
+    int i=0;
+
+    while (buf != NULL ){
+        read(token[i], buf, 1);
         write(STDOUT_FILENO, buf, 1);
+        if(buf == '\n') i++;
     }
 }
 
 
 char** tokenize(char** old_tokens, char delimeter) {
-    char** token=(char*)malloc(50*sizeof(char*));
+    char** token=(char**)malloc(50*sizeof(char*));
     for(int i=0; i<50;i++){
-        token[i]=malloc(20*sizeof(char));
+        token[i]=(char*)malloc(20*sizeof(char));
     }
     char buf[2] = { 0, 0 };
     int tmp=0;
@@ -159,5 +162,13 @@ int main(){
     write(STDOUT_FILENO, "Your user name: ", 15);
     mread(user);
     introduction(user);
-    handle_commands(user);
+    //handle_commands(user);
+    showUserName_and_Dir(user);
+    char** line = readLine();
+   // char** tok = (char**)malloc(50*sizeof(char*));
+   // for(int i=0; i<50;i++){
+   // tok[i]=(char*)malloc(20*sizeof(char));
+   // }
+   // tok =tokenize(line, ' ');
+   // write_token(tok);
 }
