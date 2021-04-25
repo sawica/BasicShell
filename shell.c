@@ -32,7 +32,7 @@ void introduction(char* user) {
 
     char* help = "*If you need more informations about how to use this shell just write 'help' in command line. \n";
     write(STDOUT_FILENO, help, strlen(help));
-    sleep(3);
+   // sleep(3);
      clear();
 }
 
@@ -161,7 +161,7 @@ void function(char** token){
     char buf[2] = { 0, 0 };
     char* tmp = (char*)malloc(5*sizeof(char));
         while(buf != NULL){
-            if(buf !='\n'){
+            if(buf !=' '){
                 read(token[i], buf, 1);
                 strcat(tmp, buf);
             }
@@ -187,7 +187,11 @@ int main(){
     introduction(user);
     //handle_commands(user);
     showUserName_and_Dir(user);
-    char** line = readLine();
+    char** line = (char**)malloc(50*sizeof(char*));
+    for(int i=0; i<50;i++){
+        line[i]=(char*)malloc(20*sizeof(char));
+    }
+    line = readLine();
     showUserName_and_Dir(user);
     char** tok = (char**)malloc(50*sizeof(char*));
     for(int i=0; i<50;i++){
