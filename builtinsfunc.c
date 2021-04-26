@@ -29,11 +29,11 @@ void handle_commands(char* user//, char** first_command, char** second_command
     char* commands[4];
     int one_or_two = 0;
     int sum=0;
-    showUserName_and_Dir(user);
     while(1){
         showUserName_and_Dir(user);
         line = readLine();
         tokenize(line, ' ');
+        tokenize(line, '-');
         tokenize(line, '|');
         tokenize(line, '$');
         tokenize(line, '>');
@@ -92,19 +92,23 @@ void printHelp(){
 }
 void function_switch(char** token){
     // switch(tmp){
-    int i, command;
+    int i, command=100;
      char* all_commands[5];
-     all_commands[0]="help";
-     all_commands[1]="exit";
-     all_commands[2]="cd";
-     all_commands[3]="mkdir";
-     all_commands[4]="ls";
+     all_commands[0]="help\n";
+     all_commands[1]="exit\n";
+     all_commands[2]="cd\n";
+     all_commands[3]="mkdir\n";
+     all_commands[4]="ls\n";
 
      char * tok = (char*)malloc(sizeof(char)*(strlen(token[0])-1));
      tok = token[0];
-     for(i=0;i<5;i++){
+     fprintf(stdout, "ej: %s ", token[0]);
+     fprintf(stdout, "cmp: %d ", strcmp(tok, all_commands[0]));
 
-         if (strcmp(tok, all_commands[i]) == 0) {
+    for(i=0;i<5;i++){
+        fprintf(stdout, "\nA: %s, %s, cmp: %d ", tok, all_commands[i], strcmp(tok, all_commands[i]));
+
+            if (strcmp(tok, all_commands[i]) == 0) {
              fprintf(stdout, "huhu: %s ", token[0]);
              command = i;
              break;
@@ -116,6 +120,7 @@ void function_switch(char** token){
      switch(command){
          case 0:
              printHelp();
+             break;
          case 1:
              write(STDOUT_FILENO, tmp, strlen(tmp));
              //answer = mread();

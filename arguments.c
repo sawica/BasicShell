@@ -67,7 +67,7 @@ char** readLine(){
     return line;
 }
 
-char** tokenize(char** old_tokens, char delimeter) {
+void tokenize(char** old_tokens, char delimeter) {
     char** token=(char**)malloc(50*sizeof(char*));
     int i,j;
     for(i=0; i<50;i++){
@@ -89,7 +89,10 @@ char** tokenize(char** old_tokens, char delimeter) {
             }
         }
     }
-   old_tokens = token;
+    fprintf(stdout, "tokenize: %s ", token[0]);
+    old_tokens = token;
+    free(token);
+    //   return token;
     // delimeter = ' ', old_tokens = ["ls -1 | grep .c|xargs wc -l|sort >>file.txt"]
     // return ["ls", " ", "-1", " ", "|", " ", "grep", " ", ".c|xargs", " ", "wc",  " ","-l|sort", " ", ">>file.txt"]
     //
