@@ -10,7 +10,7 @@ void introduction(char* user);
 void showUserName_and_Dir(char* user);
 char** readLine();
 void write_token (char **token);
-void tokenize(char** old_tokens, char delimeter);
+char** tokenize(char** old_tokens, char delimeter);
 
 
 #endif //BASICSHELL_ARGUMENTS_H

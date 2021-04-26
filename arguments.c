@@ -67,31 +67,40 @@ char** readLine(){
     return line;
 }
 
-void tokenize(char** old_tokens, char delimeter) {
-    char** token=(char**)malloc(50*sizeof(char*));
-    int i,j;
-    for(i=0; i<50;i++){
-        token[i]=(char*)malloc(20*sizeof(char));
+char** tokenize(char** old_tokens, char delimeter) {
+    char** tokens = malloc(50 * sizeof(char*));
+    for(int i = 0; i < 50; i++){
+        tokens[i] = NULL;
     }
+
     char *buf;
-    int tmp=0;
-    for(j=0; j<50; j++){
-        if(old_tokens[j]==NULL) break;
+    int tmp = 0;
+    for(int j = 0; j < 50 && old_tokens[j] != NULL; j++){
         buf = old_tokens[j];
-        
-        for(i = 0; i < strlen(buf); i++){
+        tokens[tmp] = malloc(sizeof(char) * strlen(buf));
+        memset(tokens[tmp], '\0', strlen(buf));
+        fprintf(stdout, "`%s`, ", tokens[0]);
+        for(int i = 0; i < strlen(buf); i++){
             if (buf[i] != delimeter) {
-                token[tmp][strlen(token[tmp])] = buf[i];
-            }
-           else {
-                token[++tmp][strlen(token[tmp])] = buf[i];
-                tmp++;
+                tokens[tmp][strlen(tokens[tmp])] = buf[i];
+                fprintf(stdout, "`%s`, ", tokens[tmp]);
+            } else {
+                tokens[++tmp] = malloc(sizeof(char) * 2);
+                tokens[tmp][0] = buf[i];
+                tokens[tmp++][1] = '\0';
             }
         }
+
+        // ekhem, same sprobojcie naprawic... a nie czekacie na zbawienie
+    }   //probowalysmy wczoraj pol dnia i nocy xd troche zwatpilysmy
+            // to nie ma cos ie smiac. teraz to robcie
+
+    fprintf(stdout, "tokenize: ");
+    for (int i = 0; i < 50 && tokens[i] != NULL; ++i) {
+        fprintf(stdout, "`%s`, ", tokens[i]);
     }
-    fprintf(stdout, "tokenize: %s ", token[0]);
-    old_tokens = token;
-    free(token);
+
+    return tokens;
     //   return token;
     // delimeter = ' ', old_tokens = ["ls -1 | grep .c|xargs wc -l|sort >>file.txt"]
     // return ["ls", " ", "-1", " ", "|", " ", "grep", " ", ".c|xargs", " ", "wc",  " ","-l|sort", " ", ">>file.txt"]

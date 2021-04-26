@@ -33,12 +33,12 @@ void handle_commands(char* user//, char** first_command, char** second_command
         showUserName_and_Dir(user);
         line = readLine();
         tokenize(line, ' ');
-        tokenize(line, '-');
-        tokenize(line, '|');
-        tokenize(line, '$');
-        tokenize(line, '>');
-        tokenize(line, '#');
-        function_switch(line);
+//        tokenize(line, '-');
+//        tokenize(line, '|');
+//        tokenize(line, '$');
+//        tokenize(line, '>');
+//        tokenize(line, '#');
+        //function_switch(line);
 /*
         one_or_two = parse_commands(line, commands); //return 0 lub 2
         while(counter!=0){
